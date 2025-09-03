@@ -37,17 +37,17 @@ class KU_Mirte:
         print("Initiating components")
         rclpy.init()
         self.robot_pos_sub = PositionSubscriber()
-        self.camera_sub = CameraSubscriber()
+        # self.camera_sub = CameraSubscriber()
         self.camera_compressed_sub = CameraCompressedSubscriber()
         self.lidar_sub = LidarSubscriber()
         self.sonar_sub = SonarSubscriber()
         self.odometry_pub_mirte = OdometryPublisher('odometry_mirte', 'base_link')
         self.odometry_pub_world = OdometryPublisher('odometry_world', 'odom')
-        self.tree_pub_mirte = TreePublisher('tree_mirte', 'base_link')
-        self.tree_pub_world = TreePublisher('tree_world', 'odom')
-        self.pointcloud_pub_mirte = PointCloudPublisher('pointcloud_mirte', 'base_link')
-        self.pointcloud_pub_world = PointCloudPublisher('pointcloud_world', 'odom')
-        self.occupancy_pub_mirte = OccupancyMapPublisher('occupancy_grid_mirte', 'base_link')
+        # self.tree_pub_mirte = TreePublisher('tree_mirte', 'base_link')
+        # self.tree_pub_world = TreePublisher('tree_world', 'odom')
+        # self.pointcloud_pub_mirte = PointCloudPublisher('pointcloud_mirte', 'base_link')
+        # self.pointcloud_pub_world = PointCloudPublisher('pointcloud_world', 'odom')
+        # self.occupancy_pub_mirte = OccupancyMapPublisher('occupancy_grid_mirte', 'base_link')
         self.movement_pub = MovementPublisher()
 
         self.executor_thread = None
@@ -57,18 +57,18 @@ class KU_Mirte:
         rclpy.spin_once(self.robot_pos_sub, timeout_sec=2.0)
         #rclpy.spin_once(self.lidar_sub)
 
-        self.k_matrix = self.camera_sub.k_matrix # Camera intrinsic matrix
-        self.d_matrix = self.camera_sub.d_matrix # Camera distortion
-        self.p_matrix = self.camera_sub.p_matrix # Camera projection matrix
+        # self.k_matrix = self.camera_sub.k_matrix # Camera intrinsic matrix
+        # self.d_matrix = self.camera_sub.d_matrix # Camera distortion
+        # self.p_matrix = self.camera_sub.p_matrix # Camera projection matrix
 
-        # Check if k_matrix is set, if not, set it to a default value
-        if self.k_matrix is None or np.all(self.k_matrix == 0) or self.k_matrix.shape != (3, 3):
-            self.k_matrix = np.array([[590.0, 0.0, 320.0],
-                                      [0.0, 590.0, 240.0],
-                                      [0.0, 0.0, 1.0]])
-        # Check if d_matrix is set, if not, set it to a default value
-        if self.d_matrix is None or np.all(self.d_matrix == 0) or self.d_matrix.shape != (5,):
-            self.d_matrix = np.array([0.0, 0.0, 0.0, 0.0, 0.0])
+        # # Check if k_matrix is set, if not, set it to a default value
+        # if self.k_matrix is None or np.all(self.k_matrix == 0) or self.k_matrix.shape != (3, 3):
+        #     self.k_matrix = np.array([[590.0, 0.0, 320.0],
+        #                               [0.0, 590.0, 240.0],
+        #                               [0.0, 0.0, 1.0]])
+        # # Check if d_matrix is set, if not, set it to a default value
+        # if self.d_matrix is None or np.all(self.d_matrix == 0) or self.d_matrix.shape != (5,):
+        #     self.d_matrix = np.array([0.0, 0.0, 0.0, 0.0, 0.0])
                     
 
         print("KU Mirte initialized.")
@@ -114,14 +114,15 @@ class KU_Mirte:
         print("Starting executor thread...")
         self.executor = MultiThreadedExecutor()
 
-        self.executor.add_node(self.camera_sub)
+        # self.executor.add_node(self.camera_sub)
+        self.executor.add_node(self.camera_compressed_sub)
         self.executor.add_node(self.movement_pub)
         self.executor.add_node(self.lidar_sub)
         self.executor.add_node(self.sonar_sub)
-        self.executor.add_node(self.pointcloud_pub_mirte)
-        self.executor.add_node(self.pointcloud_pub_world)
-        self.executor.add_node(self.occupancy_pub_mirte)
-        self.executor.add_node(self.tree_pub_mirte)
+        # self.executor.add_node(self.pointcloud_pub_mirte)
+        # self.executor.add_node(self.pointcloud_pub_world)
+        # self.executor.add_node(self.occupancy_pub_mirte)
+        # self.executor.add_node(self.tree_pub_mirte)
 
         self.executor_thread = threading.Thread(target=self.executor.spin, daemon=True)
         self.executor_thread.start()
