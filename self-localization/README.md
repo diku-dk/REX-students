@@ -7,7 +7,9 @@ of the source code. In particular it is recommended to look at ```particle.py```
 to see how particles are represented.
 
 We indicate where you might need to make changes to ```selflocalize.py``` by lines saying:
-  //XXX: You do this
+```python
+  # XXX: You do this
+````
 So look for 'XXX' to see where you should concentrate your efforts. But feel free to restructure 
 the code as you see fit.
 
@@ -17,4 +19,5 @@ If you like you can change calibration parameters based on your own estimates of
 
 
 Kim Steenstrup Pedersen, september, 2015, 2017, 2018, 2020, 2025.
+
 Søren Hauberg, august 21st, 2006.
