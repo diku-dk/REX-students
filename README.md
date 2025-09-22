@@ -10,6 +10,7 @@ Content:
 * The sub-directory *Arlo* contains python and Arduino code relevant for the Arlo robots.
 * The sub-directory *Mirte* contains python code relevant for the Mirte robots.
 * The sub-directory *opencv-python* contains example code for processing images as well as capturing images on Arlo.
+* The sub-directory *self-localization* contains hand-out code for the self-localization exercise.
 
 ## Reporting Bugs
 If you encounter a bug or issue in the code, please create an issue on the github page.
