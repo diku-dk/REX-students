@@ -103,7 +103,7 @@ def draw_world(est_pose, particles, world):
     # Draw estimated robot pose
     a = (int(est_pose.getX())+offsetX, ymax-(int(est_pose.getY())+offsetY))
     b = (int(est_pose.getX() + 15.0*np.cos(est_pose.getTheta()))+offsetX, 
-         ymax-(int(est_pose.getY() - 15.0*np.sin(est_pose.getTheta()))+offsetY))
+         ymax-(int(est_pose.getY() + 15.0*np.sin(est_pose.getTheta()))+offsetY))
     cv2.circle(world, a, 5, CMAGENTA, 2)
     cv2.line(world, a, b, CMAGENTA, 2)
 
@@ -156,7 +156,7 @@ try:
         cam = camera.Camera(0, robottype='arlo', useCaptureThread=False)
     else:
         #cam = camera.Camera(0, robottype='macbookpro', useCaptureThread=True)
-        cam = camera.Camera(0, robottype='macbookpro', useCaptureThread=False)
+        cam = camera.Camera(1, robottype='macbookpro', useCaptureThread=False)
 
     while True:
 
