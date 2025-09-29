@@ -134,7 +134,7 @@ class Camera(object):
 
         # Set camera calibration info
         if robottype == 'arlo':
-            #self.imageSize = (1280, 720)
+            # 1640 x 1232 @ 30 FPS is the maximum video resolution for the Arlo camera
             self.imageSize = (1640, 1232)
             #self.intrinsic_matrix = np.asarray([ 7.1305391967046853e+02, 0., 3.1172820723774367e+02, 0.,
             #       7.0564929862291285e+02, 2.5634470978315028e+02, 0., 0., 1. ], dtype = np.float64)
@@ -218,7 +218,7 @@ class Camera(object):
             #self.picam2_config = self.cam.create_still_configuration()
             frame_duration_limit = int(1/self.FPS * 1000000) # Microseconds
             # TODO: Change configuration to set resolution, framerate
-            self.picam2_config = self.cam.create_video_configuration({"size": self.imageSize, "format": 'RGB888'},
+            self.picam2_config = self.cam.create_video_configuration( {"size": self.imageSize, "format": 'RGB888'},
                                                                      controls={"FrameDurationLimits": (frame_duration_limit, frame_duration_limit),
                                                                                "ScalerCrop": (0,0,3280,2464)},
                                                                      queue=False)
